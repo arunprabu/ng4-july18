@@ -1,0 +1,58 @@
+RouterModule
+===========
+1) A new file needs to be created in app folder to implement the router module: app.routing.ts. Insert the following code:
+
+  import { NgModule } from '@angular/core';
+  import { Routes, RouterModule } from '@angular/router';
+  import { HomeComponent } from './components/home/home.component';
+  import { ContactsComponent } from './components/contacts/contacts.component';
+  import { AddContactComponent } from './components/contacts/add-contact/add-contact.component';
+  import { ContactCardComponent } from './components/contacts/contact-card/contact-card.component';
+  import { ContactDetailsComponent } from './components/contacts/contact-details/contact-details.component';
+  import { ContactsListComponent } from './components/contacts/contacts-list/contacts-list.component';
+
+  const APP_ROUTES: Routes = [
+    //syntax : path should have string and the component when that path is hit
+    { path: '', component:HomeComponent, pathMatch: 'full'}, //localhost:4200
+    { path: 'home', component:HomeComponent}, //localhost:4200/home
+    { path: 'contacts/add', component: AddContactComponent, pathMatch: 'full'},
+    { path: 'contacts', component: ContactsListComponent, pathMatch: 'full' }, //localhost:4200/contacts,
+    { path: 'contact-cards', component: ContactsComponent, //load this comp as this has child router outlet
+      children: [
+        { path: '', component: ContactCardComponent, pathMatch: 'full'  }, //in that child router-outlet load card
+        { path: ':id', component: ContactDetailsComponent } // in child router-outlet load details comp
+      ]
+    }
+  ];
+
+  @NgModule({
+    imports: [RouterModule.forRoot(APP_ROUTES)],
+    exports: [RouterModule]
+  })
+  export class AppRouterModule {}
+
+  export const routingComponents = [HomeComponent, AddContactComponent, ContactsComponent];
+================================
+1.1) Modify ContactsComponent.html to have just the following
+    
+    <router-outlet></router-outlet>
+    <a routerLink="/home">Take me to Home page</a>
+==============
+
+2) Add AppRoutingModule in main app.module.ts's imports blocks
+  @NgModule({
+    imports: [ BrowserModule, 
+               AppRoutingModule 
+             ],
+    ..,
+    ..
+  });
+
+==========
+
+
+
+
+
+
+

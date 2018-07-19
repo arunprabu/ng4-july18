@@ -1,0 +1,78 @@
+/// Lazy loading a module
+1) You need two files for an example component, likewise for all components 
+  example.module.ts 
+  example.router.ts
+
+2) example.module.ts should have the following
+
+    import { NgModule } from '@angular/core';
+    //*** Note: if this component needs to use some directives like: *ngIf, *ngFor… then you will need to import CommonModule from @angular/core in this module.
+    import { CommonModule } from '@angular/common';
+
+    import { ExampleComponent } from './example.component';
+    import { exampleRouter } from './example.router';
+
+    @NgModule({
+      declarations:[
+        ExampleComponent
+      ],
+      imports:[
+        exampleRouter
+      ]
+    })
+
+    export class ExampleModule {}
+
+3) Let's complete the example.router.ts file with the following,
+    
+    import { Routes, RouterModule } from '@angular/router';
+    import { ExampleComponent } from './example.component';
+
+    const EXAMPLE_ROUTER: Routes = [
+      {
+        path: '',
+        component: ExampleComponent
+        // this is the possible place for nested routes
+      } 
+    ];
+
+    export const exampleRouter  = RouterModule.forChild(EXAMPLE_ROUTER);
+
+4) Then, we create an important file named app.router.ts in the app/ folder 
+
+  import { ModuleWithProviders } from '@angular/core';
+  import { Routes, RouterModule } from '@angular/router';
+
+  export const APP_ROUTER: Routes = [
+    {
+      path: '',
+      loadChildren: './components/example.module#ExampleModule',
+      data: { preload: true } // this line is an optional one
+    },
+    {
+      path: 'about',
+      loadChildren: './components/about.module#AboutModule'
+    }
+  ];
+
+  export const appRouter: ModuleWithProviders = RouterModule.forRoot(APP_ROUTER);
+
+5) Finally, in app.module.ts,
+   import { appRouter } from './app.router';
+   @NgModule({
+    imports: [
+      ..,
+      ..,
+      appRouter
+    ]
+   })
+
+That's all..
+
+Note: Open Chrome Dev Tool by pressing F12, then go to Network tab. When you navigate to a new page, you will see the *.chunk.js will download if that page is never visit before.
+
+Refer: https://coryrylan.com/blog/custom-preloading-and-lazy-loading-strategies-with-angular
+https://angular-2-training-book.rangle.io/handout/modules/lazy-loading-module.html
+https://medium.com/@leekp/lazy-loading-with-angular-4-29c23792b7f4
+https://www.concretepage.com/angular-2/angular-2-4-child-routes-and-relative-navigation-example
+https://angular-2-training-book.rangle.io/handout/routing/child_routes.html

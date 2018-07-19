@@ -1,0 +1,70 @@
+<div class="panel" *ngIf="contactData">
+    <div class="panel-body p-t-10" style="background: #eee;">
+      <div class="media-main">
+        <div class="pull-right btn-group-sm"> 
+          <a class="btn btn-success tooltips" (click)="openEditModal()"> 
+            <i class="glyphicon glyphicon-pencil"></i> 
+          </a> 
+          <a href="#" class="btn btn-danger tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"> 
+            <i class="glyphicon glyphicon-trash"></i> 
+          </a>
+        </div>
+        <div class="info">
+          <h4>{{contactData.name }}</h4>
+          <p class="text-muted">{{contactData.phone}}</p>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <hr style="border-top: solid 1px #ccc">
+      <ul class="social-links list-inline p-b-10">
+        <li style="width:80%;">
+          <h5>
+            <i class="glyphicon glyphicon-envelope"></i> 
+            <span class="">{{contactData.email}}</span>
+          </h5>
+        </li>
+        <li class="text-right">
+          <h5>
+            <i class="glyphicon glyphicon-time"></i> 
+            <span class="">6th May 2017</span>
+          </h5>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <form  #f="ngForm">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" class="form-control" 
+              name="name" placeholder="Enter Full Name" [(ngModel)]="updatableContact.name" required>
+            </div>
+            <div class="form-group">
+              <label for="phoneNo">Phone No: {{contactData.phone}}</label>
+              <input type="text" class="form-control" 
+              name="phone" placeholder="Enter Phone No" [(ngModel)]="updatableContact.phone" required>
+            </div>
+            <div class="form-group">
+              <label for="email">E-Mail</label>
+              <input type="email" class="form-control" 
+              name="email" placeholder="Enter E-Mail" [(ngModel)]="updatableContact.email" required>
+            </div>
+          </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="editContact(f)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>

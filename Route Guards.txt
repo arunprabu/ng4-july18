@@ -1,0 +1,44 @@
+//Guards in Angular
+1) ng g g auth
+
+    canActivate( next: ActivatedRouteSnapshot, 
+                state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      if (this.authService.checkAuth()) {
+        console.log('true');
+        return true;
+      }else {
+        this.router.navigate(['/login']);
+        return false;
+      }
+    }
+
+2) ng g s auth 
+  isLoggedIn;
+  login(username, password){
+    //succes
+    if(success){
+      this.isLoggedIn = true;
+    }
+    else{
+      this.isLoggedIn = false;
+    }
+  }
+
+  checkAuth(){
+    return this.isLoggedIn;
+  }
+
+3) add AuthGuard, AuthService as Providers in NgModule.
+
+4) In routes, 
+   {
+        path: 'dashboard',
+        component: DashboardUsersComponent,
+        canActivate: [AuthGuard],
+   }
+
+
+5) Check the app. It should now redirect you to login page as, AuthService's isLoggedIn() returns false 
+
+
+https://scotch.io/courses/routing-angular-2-applications/canactivate-and-canactivatechild

@@ -1,0 +1,24 @@
+<p><a routerLink="/">Home </a> ><b><code> {{ categoryName }}</code></b></p>
+<hr>
+<div class="col-md-3">
+  <nav>
+    <ul>
+      <li><a [routerLink]="['./mobiles']">Mobiles</a></li>
+      <li><a [routerLink]="['./tv']">TV 
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Not Implemented Properly"></span>
+      </a></li>
+      <li><a [routerLink]="['./laptops']" >Laptops <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Not Implemented Properly"></span></a></li>
+      <li><a [routerLink]="['./home-theatres']">Home Theatre <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Not Implemented Properly"></span></a></li>
+      <li><a [routerLink]="['./accessories']">Accessories <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="Not Implemented Properly"></span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="col-md-9">
+  <div style="color: red;">
+    Category Detail's router outlet:
+  </div>
+  <div style="border: 2px solid red; padding: 15px;">
+    <router-outlet></router-outlet> <!-- look at the one more router outlet - this is for child route -->
+  </div>
+</div>
